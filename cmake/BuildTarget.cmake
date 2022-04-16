@@ -34,33 +34,32 @@ elseif(TARGET_TYPE STREQUAL exe)
   #
   add_executable(${TARGET_NAME} ${SOURCES})
   
-elseif(TARGET_TYPE STREQUAL arduino_firmware)
+elseif(TARGET_TYPE STREQUAL firmware)
   #
-  # arduino_firmware
+  # firmware
   #
   file(GLOB_RECURSE ARDUINO_CORE_SRC 
-	${ARDUINO_PATH}/cores/arduino/*.S
-	${ARDUINO_PATH}/cores/arduino/*.c
-	${ARDUINO_PATH}/cores/arduino/*.cpp
+	${ARDUINO_CORE}/*.S
+	${ARDUINO_CORE}/*.c
+	${ARDUINO_CORE}/*.cpp
 	)
 
-  set(CMAKE_C_COMPILER avr-gcc)
-  set(CMAKE_CXX_COMPILER avr-g++)
-  set(CMAKE_OBJCOPY avr-objcopy)
-  set(CMAKE_OBJDUMP avr-objdump)
-  set(CMAKE_RANLIB avr-ranlib)
-  set(CMAKE_LINKER avr-ld)
+  set(CMAKE_C_COMPILER ${TOOLCHAIN_PREFIX}gcc)
+  set(CMAKE_CXX_COMPILER ${TOOLCHAIN_PREFIX}g++)
+  set(CMAKE_OBJCOPY ${TOOLCHAIN_PREFIX}objcopy)
+  set(CMAKE_OBJDUMP ${TOOLCHAIN_PREFIX}objdump)
+  set(CMAKE_RANLIB ${TOOLCHAIN_PREFIX}ranlib)
+  set(CMAKE_LINKER ${TOOLCHAIN_PREFIX}ld)
 
-  add_definitions(-mmcu=${MCU} -DF_CPU=${CPU_SPEED} -DARDUINO_AVR_${BOARD_TYPE} -DARDUINO_ARCH_AVR)
   add_definitions(-c -Os -Wall)
   add_definitions(-fno-exceptions -ffunction-sections -fdata-sections)
 
   set(CMAKE_SHARED_LIBRARY_LINK_C_FLAGS "")   # remove -rdynamic for C
   set(CMAKE_SHARED_LIBRARY_LINK_CXX_FLAGS "") # remove -rdynamic for CXX
-  set(CMAKE_EXE_LINKER_FLAGS "-Os -Wl,--gc-sections -mmcu=${MCU}")
+  set(CMAKE_EXE_LINKER_FLAGS "-Os -Wl,--gc-sections")
 
-  list(APPEND _INCLUDE_DIRS ${ARDUINO_PATH}/cores/arduino)
-  list(APPEND _INCLUDE_DIRS ${ARDUINO_PATH}/variants/${PIN_VARIANT})
+  list(APPEND _INCLUDE_DIRS ${ARDUINO_CORE})
+  list(APPEND _INCLUDE_DIRS ${ARDUINO_VARIANT})
 
   add_executable(${TARGET_NAME} ${ARDUINO_CORE_SRC} ${SOURCES})
 
@@ -140,7 +139,7 @@ elseif(TARGET_TYPE STREQUAL lib_static)
                    ARCHIVE DESTINATION lib)
 elseif(TARGET_TYPE STREQUAL exe)
   install(TARGETS ${TARGET_NAME} RUNTIME DESTINATION bin)
-# arduino_firmware: no install (use upload instead)
+# firmware: no install (use upload instead)
 # lib_headers: only headers to install (see below)
 endif()
 

@@ -50,7 +50,7 @@ function _usage() {
         echo "  Install files to /usr/local (requires root priviledges)."
         echo
         echo -e "\033[33m$0 upload TARGET_NAME\033[0m"
-        echo "  Upload a target to the microcontroller (for targets of type 'arduino_firmware' only)."
+        echo "  Upload a target to the microcontroller (for targets of type 'firmware' only)."
         echo
         echo -e "\033[33m$0 run TARGET_NAME\033[0m"
         echo "  Run a target from the _install directory (for targets of type 'exe' only)."

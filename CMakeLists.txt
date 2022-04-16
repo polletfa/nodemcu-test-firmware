@@ -7,12 +7,13 @@ set(PROJECT_VERSION_MINOR  1)
 set(PROJECT_VERSION_PATCH  0)
 set(PROJECT_VERSION_STATUS develop)
 
-set(COPYRIGHT              "2018, Fabien Pollet <polletfa@gmail.com>")
+set(COPYRIGHT              "2021-2022, Fabien Pollet <polletfa@gmail.com>")
 
 set(PACKAGES
 )
 
 set(TARGETS
+  firmware
 )
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
