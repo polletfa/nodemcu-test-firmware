@@ -26,6 +26,7 @@ public:
     void loop(void);
 
     WebServer& webServer();
+    Eeprom& eeprom();
 
     String getPinStatus(int pin);
     void setPinMode(int pin, int mode);

@@ -14,8 +14,8 @@
 Eeprom::Eeprom() {
     EEPROM.begin(sizeof(eeprom_t));
     EEPROM.get(0, m_content);
-    if(m_content.state == EEPROM_BLANK) {
-        m_content.state = EEPROM_SET;
+    if(m_content.state == 0xff) {
+        m_content.state = 0;
         setName("test-uctrl");
         setSsid("voodoo");
         setPassword("werner2020");

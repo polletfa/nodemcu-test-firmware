@@ -12,10 +12,8 @@
 
 #include <Arduino.h>
 
-enum eepromState_t { EEPROM_SET = 0, EEPROM_BLANK = 0xff };
-
 struct eeprom_t {
-    eepromState_t state;
+    char state;
     char name[100];
     char ssid[32];
     char password[100];

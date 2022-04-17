@@ -58,6 +58,10 @@ WebServer& Firmware::webServer() {
     return m_server;
 }
 
+Eeprom& Firmware::eeprom() {
+    return m_eeprom;
+}
+
 String Firmware::getPinStatus(int pin) {
     if(m_modes[pin] == INPUT) {
         int val = digitalRead(pin);
