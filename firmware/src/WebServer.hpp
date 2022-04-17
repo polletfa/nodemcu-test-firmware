@@ -15,42 +15,21 @@
 #include <ESP8266WiFiMulti.h>
 #include <ESP8266WebServer.h> 
 
-struct eeprom_t {
-    char name[1024];
-    char ssid[33];
-    char password[1024];
-};
+#include "Eeprom.hpp"
 
 class WebServer {
 public:
-    static constexpr char* NAME { "test-uctrl" };
-    static constexpr char* SSID { "voodoo" };
-    static constexpr char* PASSWORD { "werner2020" };
-
-    static WebServer& instance();
+    WebServer();
     
-    void setup(void);
-    void loop(void);
+    void serve();
 
 private:
-    static WebServer* m_instance;
-
-    eeprom_t m_eeprom;
-    int m_modes[17];
-    int m_states[17];
-    ESP8266WiFiMulti m_wifiMulti;
     ESP8266WebServer m_server{80};
-    IPAddress m_ip;
-    bool m_mdns {false};
-
-    WebServer() {}
 
     static void handleRoot();
     static void handleFavicon();
     static void handleAPI();
 
-    String getPinStatus(int pin);
-    
     void _handleRoot();
     void _handleFavicon();    
     void _handleAPI();

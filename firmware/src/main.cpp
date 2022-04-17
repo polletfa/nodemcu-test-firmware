@@ -7,12 +7,12 @@
  *
  *****************************************************/
 
-#include "WebServer.hpp"
+#include "Firmware.hpp"
 
 void setup(void) {
-    WebServer::instance().setup();
+    Firmware::instance().setup();
 }
 
 void loop(void) {
-    WebServer::instance().loop();
+    Firmware::instance().loop();
 }
