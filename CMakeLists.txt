@@ -3,9 +3,9 @@ project(arduino.nodemcu-test-firmware)
 
 # Use digitalis.build changeversion or tag to modify the version
 set(PROJECT_VERSION_MAJOR  0)
-set(PROJECT_VERSION_MINOR  1)
+set(PROJECT_VERSION_MINOR  2)
 set(PROJECT_VERSION_PATCH  0)
-set(PROJECT_VERSION_STATUS tag)
+set(PROJECT_VERSION_STATUS develop)
 
 set(COPYRIGHT              "2021-2022, Fabien Pollet <polletfa@gmail.com>")
 
