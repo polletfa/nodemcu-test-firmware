@@ -6,3 +6,6 @@
  * MIT License (see LICENSE.md file)
  *
  *****************************************************/
+
+// This file is only here as a requirement of the Arduino IDE.
+// The actual source code is in src/

@@ -12,7 +12,7 @@
 
 #include <Arduino.h>
 
-struct eeprom_t {
+struct EepromData {
     char state;
     char name[100];
     char ssid[32];
@@ -37,7 +37,7 @@ public:
     void save();
     
 private:
-    eeprom_t m_content;
+    EepromData m_content;
 
     String getString(const char* addr, int size) const;
 };

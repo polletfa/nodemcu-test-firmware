@@ -54,7 +54,7 @@ void WebServer::_handleAPI() {
     if(req.isValid()) {
         String res;
         switch(req.method()) {
-        case API_STATUS:
+        case ApiMethod::STATUS:
             res = Firmware::instance().getPinStatus(D0)
                 + Firmware::instance().getPinStatus(D1)
                 + Firmware::instance().getPinStatus(D2)
@@ -65,11 +65,11 @@ void WebServer::_handleAPI() {
                 + Firmware::instance().getPinStatus(D7)
                 + Firmware::instance().getPinStatus(D8);
             break;
-        case API_MODE:
+        case ApiMethod::MODE:
             Firmware::instance().setPinMode(req.pin(), req.mode());
             res = "success";
             break;
-        case API_WRITE:
+        case ApiMethod::WRITE:
             Firmware::instance().writeDigitalPin(req.pin(), req.value());
             res = "success";
             break;

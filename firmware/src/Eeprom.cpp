@@ -12,7 +12,7 @@
 #include <EEPROM.h>
 
 Eeprom::Eeprom() {
-    EEPROM.begin(sizeof(eeprom_t));
+    EEPROM.begin(sizeof(EepromData));
     EEPROM.get(0, m_content);
     if(m_content.state == 0xff) {
         m_content.state = 0;
