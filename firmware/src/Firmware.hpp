@@ -11,8 +11,6 @@
 #define NODEMCU_TEST_FIRMWARE_FIRMWARE
 
 #include <Arduino.h>
-#include <IPAddress.h>
-#include <ESP8266WiFiMulti.h>
 #include <ESP8266WebServer.h> 
 
 #include "Eeprom.hpp"
@@ -36,11 +34,7 @@ private:
     static Firmware* m_instance;
 
     Eeprom m_eeprom;
-    int m_modes[17];
-    int m_states[17];
-    ESP8266WiFiMulti m_wifiMulti;
-    IPAddress m_ip;
-    bool m_mdns {false};
+    int m_modes[17] { INPUT };
     WebServer m_server;
 
     Firmware() {}

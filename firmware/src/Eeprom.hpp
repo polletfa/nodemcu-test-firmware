@@ -22,6 +22,8 @@ struct EepromData {
 
 class Eeprom {
 public:
+    static constexpr char* DEFAULT_NAME {"test-uctrl"};
+    
     Eeprom();
     
     String name() const;
@@ -37,6 +39,7 @@ public:
     void save();
     
 private:
+    bool m_modified {false};
     EepromData m_content;
 
     String getString(const char* addr, int size) const;

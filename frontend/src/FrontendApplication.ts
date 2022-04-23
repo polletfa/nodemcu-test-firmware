@@ -7,6 +7,8 @@
  *
  *****************************************************/
 
+import { Modal } from "bootstrap";
+
 import { Layout } from './Layout';
 import { APIRequest } from './APIRequest';
 
@@ -135,5 +137,10 @@ export class FrontendApplication {
             this.setStateSwitch(index, stateEl.checked);
             new APIRequest(this, "/write/"+index+"/"+(stateEl.checked ? "high" : "low"));
         }
+    }
+
+    public openModal(name: string) {
+        const el = document.getElementById(name + "-dialog");
+        if(el instanceof HTMLElement) Modal.getOrCreateInstance(el).toggle();
     }
 }

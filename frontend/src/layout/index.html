@@ -3,7 +3,6 @@
 <!-- Import external files              -->
 <!--                                    -->
 <!import bootstrap/dist/css/bootstrap.min.css>
-<!import bootstrap/dist/js/bootstrap.min.js>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" style="position: relative; min-height:100%;">
   <head>
     <meta charset="utf-8"><!--!
@@ -39,7 +38,7 @@
     <link id="favicon" rel="icon" type="image/svg+xml" href="/favicon.svg">
     <title><!name> <!version></title>
   </head>
-  <body onresize="window.application.layout.resizeHeader();">
+  <body onresize="window.application.layout.resizeHeader();" class="bootstrap-dark">
     
     <!-- Header: title bar & error banner -->
 
@@ -60,8 +59,12 @@
       </div>
     </main>
 
-    <!-- Footer                             -->
+    <!-- Footer -->
 
     <!include layout/footer.html>
+
+    <!-- Modals -->
+    <!include layout/info-dialog.html>
+    <!include layout/settings-dialog.html>
   </body>
 </html>

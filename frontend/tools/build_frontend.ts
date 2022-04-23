@@ -16,7 +16,7 @@ class FrontendBuilder {
     readonly IMPORT_FROM = "node_modules";
 
     readonly MAIN = "src/layout/index.html";
-    readonly FAVICON = "src/icons/favicon.svg";
+    readonly FAVICON = "node_modules/bootstrap-icons/icons/cpu.svg";
     
     readonly BUNDLE = "_build/src/frontend.js";
     readonly PACKAGE_JSON = "package.json";

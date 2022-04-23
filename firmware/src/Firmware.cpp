@@ -8,10 +8,7 @@
  *****************************************************/
 
 #include "Firmware.hpp"
-
-#include <ESP8266WiFi.h>
-#include <WiFiClient.h>
-#include <ESP8266mDNS.h>
+#include "Network.hpp"
 
 Firmware* Firmware::m_instance = nullptr;
 
@@ -27,30 +24,12 @@ void Firmware::setup(void) {
     pinMode(LED_BUILTIN, OUTPUT);
     digitalWrite(LED_BUILTIN, HIGH);
 
-    // connect to WLAN
-    wifi_station_set_hostname(m_eeprom.name().c_str());
-    m_wifiMulti.addAP(m_eeprom.ssid().c_str(), m_eeprom.password().c_str());
-
-    int i = 0;
-    while (m_wifiMulti.run() != WL_CONNECTED) { // Wait for the Wi-Fi to connect: scan for Wi-Fi networks, and connect to the strongest of the networks above
-        digitalWrite(LED_BUILTIN, LOW);
-        delay(200);
-        digitalWrite(LED_BUILTIN, HIGH);
-        delay(200);
-    }
-    digitalWrite(LED_BUILTIN, LOW); // connected
-    m_ip = WiFi.localIP();
-    m_mdns = MDNS.begin(m_eeprom.name());
-
-    // read pins
-    const int pins[] = { D0, D1, D2, D3, D4, D5, D6, D7, D8 };
-    for(int i = 0; i < 9; ++i) {
-        m_modes[pins[i]] = INPUT;
-        m_states[pins[i]] = digitalRead(pins[i]);
-    }
+    // connect to WLAN or create a Hotspot
+    Network::connect();
 }
 
 void Firmware::loop(void) {
+    Network::update();
     m_server.serve();
 }
 
@@ -63,12 +42,9 @@ Eeprom& Firmware::eeprom() {
 }
 
 String Firmware::getPinStatus(int pin) {
-    if(m_modes[pin] == INPUT) {
-        int val = digitalRead(pin);
-        return val == LOW ? "l" : "h";
-    } else {
-        return m_states[pin] == LOW ? "L" : "H";
-    }
+    return digitalRead(pin) == LOW
+        ? (m_modes[pin] == INPUT ? "l" : "L")
+        : (m_modes[pin] == INPUT ? "h" : "H");
 }
     
 void Firmware::setPinMode(int pin, int mode) {
@@ -78,5 +54,4 @@ void Firmware::setPinMode(int pin, int mode) {
 
 void Firmware::writeDigitalPin(int pin, int value) {
     digitalWrite(pin, value);
-    m_states[pin] = value;
 }

@@ -12,24 +12,24 @@
 
 #include <Arduino.h>
 
-enum class ApiMethod { INVALID, STATUS, MODE, WRITE };
+enum class ApiMethod { INVALID, CONFIG, STATUS, MODE, WRITE };
 
 class ApiRequest {
 public:
     ApiRequest(const String& uri);
 
-    bool isValid() const       { return m_valid;  }
+    bool isValid() const     { return m_valid;  }
     ApiMethod method() const { return m_method; }
-    int pin() const            { return m_pin;    }
-    int mode() const           { return m_mode;   }
-    int value() const          { return m_value;  }
+    int pin() const          { return m_pin;    }
+    int mode() const         { return m_mode;   }
+    int value() const        { return m_value;  }
 
 private:
-    bool m_valid         {        false       };
+    bool m_valid       {        false       };
     ApiMethod m_method { ApiMethod::INVALID };
-    int m_pin            {         -1         };
-    int m_mode           {         -1         };
-    int m_value          {         -1         };
+    int m_pin          {         -1         };
+    int m_mode         {         -1         };
+    int m_value        {         -1         };
 
     void parseMethod(const String& uri, int start, int end);
 

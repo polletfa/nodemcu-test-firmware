@@ -27,14 +27,16 @@ ApiRequest::ApiRequest(const String& uri) {
 
     // parse
     parseMethod(uri, positions[0]+1, positions[1]);
-    if(m_method != ApiMethod::STATUS) parsePin(uri, positions[1]+1, positions[2]);
+    if(m_method == ApiMethod::MODE || m_method == ApiMethod::WRITE) parsePin(uri, positions[1]+1, positions[2]);
     if(m_method == ApiMethod::MODE) parseMode(uri, positions[2]+1, positions[3]);
     if(m_method == ApiMethod::WRITE) parseValue(uri, positions[2]+1, positions[3]);
     validateParameters(count);
 }
 
 void ApiRequest::parseMethod(const String& uri, int start, int end) {
-    if(uri.substring(start, end).equals("status")) {
+    if(uri.substring(start, end).equals("config")) {
+        m_method = ApiMethod::CONFIG;
+    } else if(uri.substring(start, end).equals("status")) {
         m_method = ApiMethod::STATUS;
     } else if(uri.substring(start, end).equals("mode")) {
         m_method = ApiMethod::MODE;
@@ -70,6 +72,9 @@ void ApiRequest::parseValue(const String& uri, int start, int end) {
 
 void ApiRequest::validateParameters(int count) {
     switch(m_method) {
+    case ApiMethod::CONFIG:
+        if(count == 1 && m_pin == -1 && m_value == -1 && m_mode == -1) m_valid = true;
+        break;
     case ApiMethod::STATUS:
         if(count == 1 && m_pin == -1 && m_value == -1 && m_mode == -1) m_valid = true;
         break;

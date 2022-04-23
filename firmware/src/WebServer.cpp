@@ -19,9 +19,9 @@
 
 WebServer::WebServer() {
     // start web server
-    m_server.on("/", WebServer::handleRoot);
-    m_server.on("/favicon.svg", WebServer::handleFavicon);
-    m_server.onNotFound(WebServer::handleAPI);
+    m_server.on("/", [&]() { handleRoot(); });
+    m_server.on("/favicon.svg", [&]() { handleFavicon(); });
+    m_server.onNotFound([&]() { handleAPI(); });
     m_server.begin();
 }
 
@@ -30,30 +30,36 @@ void WebServer::serve() {
 }
 
 void WebServer::handleRoot() {
-    Firmware::instance().webServer()._handleRoot();
-}
-
-void WebServer::handleFavicon() {
-    Firmware::instance().webServer()._handleFavicon();
-}
-    
-void WebServer::handleAPI() {
-    Firmware::instance().webServer()._handleAPI();
-}
-    
-void WebServer::_handleRoot() {
     m_server.send(200, "text/html", HTML_CONTENT);
 }
 
-void WebServer::_handleFavicon() {
+void WebServer::handleFavicon() {
     m_server.send(200, "image/svg+xml", FAVICON);
 }
     
-void WebServer::_handleAPI() {
+void WebServer::handleAPI() {
     ApiRequest req(m_server.uri());
     if(req.isValid()) {
         String res;
+        bool doReset = false;
+
         switch(req.method()) {
+        case ApiMethod::CONFIG:
+            for(int i = 0; i < m_server.args(); ++i) {
+                if(m_server.argName(i).equals("name")) { doReset = true; Firmware::instance().eeprom().setName(m_server.arg(i)); }
+                else if(m_server.argName(i).equals("ssid")) { doReset = true; Firmware::instance().eeprom().setSsid(m_server.arg(i)); }
+                else if(m_server.argName(i).equals("password")) { doReset = true; Firmware::instance().eeprom().setPassword(m_server.arg(i)); }
+                else if(m_server.argName(i).startsWith("pinName")) Firmware::instance().eeprom().setPinName(m_server.argName(i).substring(7).toInt(), m_server.arg(i));
+                res = "success";
+            }
+            Firmware::instance().eeprom().save();
+            
+            res = Firmware::instance().eeprom().name()
+                + "\n" + Firmware::instance().eeprom().ssid()
+                + "\n" + Firmware::instance().eeprom().password();
+            for(int i = 0; i < 9; ++i)
+                res += "\n" + Firmware::instance().eeprom().pinName(i);
+            break;
         case ApiMethod::STATUS:
             res = Firmware::instance().getPinStatus(D0)
                 + Firmware::instance().getPinStatus(D1)
@@ -75,6 +81,7 @@ void WebServer::_handleAPI() {
             break;
         }
         m_server.send(200, "text/plain", res);
+        if(doReset) ESP.restart();
     } else {
         m_server.send(404, "text/plain", "404 - Not Found");
     }
