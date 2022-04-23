@@ -17,6 +17,7 @@ class Network {
 public:
     static void connect();
     static void update();
+    static void disconnect();
     
 private:
     Network() {};

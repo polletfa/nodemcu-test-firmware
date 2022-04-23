@@ -1,7 +1,7 @@
 {
     "name": "nodemcu-test-firmware",
     "displayName": "NodeMCU Test Firmware",
-    "version": "0.2.0-develop",
+    "version": "0.2.0",
     "description": "NodeMCU Test Firmware",
     "scripts": {
         "lint": "eslint src/**/*.ts tools/**/*.ts",

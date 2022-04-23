@@ -14,6 +14,7 @@
 #include <ESP8266mDNS.h>
 
 #include "Firmware.hpp"
+#include "Network.hpp"
 #include "ApiRequest.hpp"
 #include "../_gen/frontend.hpp"
 
@@ -81,7 +82,10 @@ void WebServer::handleAPI() {
             break;
         }
         m_server.send(200, "text/plain", res);
-        if(doReset) ESP.restart();
+        if(doReset) {
+            Network::disconnect();
+            ESP.restart();
+        }
     } else {
         m_server.send(404, "text/plain", "404 - Not Found");
     }
