@@ -2,7 +2,7 @@
  *
  * NodeMCU Test Firmware - Web interface
  *
- * (c) 2021-2022 Fabien Pollet <polletfa@posteo.de>
+ * (c) 2022 Fabien Pollet <polletfa@posteo.de>
  * MIT License (see LICENSE.md file)
  *
  *****************************************************/
@@ -115,6 +115,44 @@ export class Layout {
         if(extended instanceof HTMLElement) extended.innerHTML = this.escapeHTML(extended_error_text);
 
         this.show('error-banner', true);
+    }
+
+    /**
+     * Set the value for a form field.
+     *
+     * @param name ID of the field
+     * @param value New value
+     */
+    public setFormValue(name: string, value: string): void {
+        const field = document.getElementById(name);
+        if(field instanceof HTMLInputElement) {
+            field.value = value;
+        }
+    }
+
+    /**
+     * Get the value of a form field.
+     *
+     * @param name ID of the field
+     */
+    public getFormValue(name: string): string {
+        const field = document.getElementById(name);
+        if(field instanceof HTMLInputElement) {
+            return field.value;
+        } else return "";
+    }
+
+    /**
+     * Set the innerHTML of an element
+     *
+     * @param name ID of the element
+     * @param value Value
+     */
+    public setHTML(name: string, value: string): void {
+        const el = document.getElementById(name);
+        if(el instanceof HTMLElement) {
+            el.innerHTML = value;
+        }
     }
 
     /**

@@ -2,16 +2,117 @@
 
    NodeMCU Test Firmware - Web interface
 
-   (c) 2021-2022 Fabien Pollet <polletfa@posteo.de>
+   (c) 2022 Fabien Pollet <polletfa@posteo.de>
    MIT License (see LICENSE.md file)
   
   -------------------------------------------------- -->
+     
 <div class="modal" id="settings-dialog" tabindex="-1">
-  <div class="modal-dialog modal-dialog-centered modal-lg">
+  <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-body">
         <h1>Settings</h1>
-        <p>TODO</p>
+        
+        <!-- Tabs -->
+        
+        <ul class="nav nav-tabs" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button class="nav-link nav-link-dark active" id="network-tab" data-bs-toggle="tab" data-bs-target="#network" type="button" role="tab" aria-controls="network" aria-selected="true">Network</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link nav-link-dark" id="pins-tab" data-bs-toggle="tab" data-bs-target="#pins" type="button" role="tab" aria-controls="pins" aria-selected="false">Pins</button>
+          </li>
+        </ul>
+
+        <div class="tab-content m-3">
+          <div class="tab-pane fade show active" id="network" role="tabpanel" aria-labelledby="network-tab">
+            
+            <!-- Network -->
+            
+            <div class="form-group row m-3">
+              <label for="settings-network-name" class="col-sm-2 col-form-label">Name</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" id="settings-network-name" placeholder="Name for the microcontroller">
+              </div>
+            </div>
+            <div class="form-group row m-3">
+              <label for="settings-network-ssid" class="col-sm-2 col-form-label">SSID</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" id="settings-network-ssid" placeholder="SSID of the network to connect to">
+              </div>
+            </div>
+            <div class="form-group row m-3">
+              <label for="settings-network-password" class="col-sm-2 col-form-label">Password</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" id="settings-network-password" placeholder="Password for the network to connect to">
+              </div>
+            </div>
+          </div>
+          <div class="tab-pane fade" id="pins" role="tabpanel" aria-labelledby="pins-tab">
+
+            <!-- Pins -->
+
+            <div class="form-group row m-3">
+              <label for="settings-pins-d0" class="col-sm-2 col-form-label">D0</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" id="settings-pins-d0" placeholder="Description for PIN D0">
+              </div>
+            </div>
+            <div class="form-group row m-3">
+              <label for="settings-pins-d1" class="col-sm-2 col-form-label">D1</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" id="settings-pins-d1" placeholder="Description for PIN D1">
+              </div>
+            </div>
+            <div class="form-group row m-3">
+              <label for="settings-pins-d2" class="col-sm-2 col-form-label">D2</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" id="settings-pins-d2" placeholder="Description for PIN D2">
+              </div>
+            </div>
+            <div class="form-group row m-3">
+              <label for="settings-pins-d3" class="col-sm-2 col-form-label">D3</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" id="settings-pins-d3" placeholder="Description for PIN D3">
+              </div>
+            </div>
+            <div class="form-group row m-3">
+              <label for="settings-pins-d4" class="col-sm-2 col-form-label">D4</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" id="settings-pins-d4" placeholder="Description for PIN D4">
+              </div>
+            </div>
+            <div class="form-group row m-3">
+              <label for="settings-pins-d5" class="col-sm-2 col-form-label">D5</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" id="settings-pins-d5" placeholder="Description for PIN D5">
+              </div>
+            </div>
+            <div class="form-group row m-3">
+              <label for="settings-pins-d6" class="col-sm-2 col-form-label">D6</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" id="settings-pins-d6" placeholder="Description for PIN D6">
+              </div>
+            </div>
+            <div class="form-group row m-3">
+              <label for="settings-pins-d7" class="col-sm-2 col-form-label">D7</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" id="settings-pins-d7" placeholder="Description for PIN D7">
+              </div>
+            </div>
+            <div class="form-group row m-3">
+              <label for="settings-pins-d8" class="col-sm-2 col-form-label">D8</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" id="settings-pins-d8" placeholder="Description for PIN D8">
+              </div>
+            </div>
+            
+          </div>
+        </div>
+
+        <!-- Save -->
+        
+        <button class="btn btn-block btn-dark" onclick="window.application.saveSettings();">Save</button>
       </div>
     </div>
   </div>

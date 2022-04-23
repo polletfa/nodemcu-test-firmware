@@ -2,7 +2,7 @@
  *
  * rmWebUI - Web interface for the reMarkable(R) cloud.
  *
- * (c) 2021-2022 Fabien Pollet <polletfa@posteo.de>
+ * (c) 2022 Fabien Pollet <polletfa@posteo.de>
  * MIT License (see LICENSE.md file)
  *
  *****************************************************/
@@ -16,7 +16,7 @@ class FrontendBuilder {
     readonly IMPORT_FROM = "node_modules";
 
     readonly MAIN = "src/layout/index.html";
-    readonly FAVICON = "node_modules/bootstrap-icons/icons/cpu.svg";
+    readonly FAVICON = "icons/cpu.svg";
     
     readonly BUNDLE = "_build/src/frontend.js";
     readonly PACKAGE_JSON = "package.json";

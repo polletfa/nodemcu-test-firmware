@@ -2,7 +2,7 @@
  *
  * NodeMCU Test Firmware - Web interface
  *
- * (c) 2021-2022 Fabien Pollet <polletfa@posteo.de>
+ * (c) 2022 Fabien Pollet <polletfa@posteo.de>
  * MIT License (see LICENSE.md file)
  *
  *****************************************************/
@@ -24,6 +24,8 @@ declare let window: CustomWindow;
 export class FrontendApplication {
     readonly layout: Layout;                                    /**< Manage layout */
 
+    private settings: string[] = [];
+    
     /**
      * @param config Configuration provided by the backend
      */
@@ -32,9 +34,22 @@ export class FrontendApplication {
         this.layout = new Layout(this);
 
         this.fillTable();
+        this.readSettings();
         setInterval(this.readStatus.bind(this), 1000);
     }
 
+    private readSettings(): void {
+        new APIRequest(this, "/config")
+            .onReceive((resp) => {
+                this.settings = resp.split("\n");
+            })
+            .onFinish(() => {       
+                for(let i = 0; i < 9; ++i) {
+                    this.layout.setHTML("label-d"+i, "D"+i + (this.settings[i + 3] ? (" - " + this.settings[i+3]) : ""));
+                }
+            });
+    }
+    
     private readStatus(): void {
         if(APIRequest.getActiveRequests() == 0) {
             new APIRequest(this, "/status", true)
@@ -105,7 +120,7 @@ export class FrontendApplication {
     private fillTable(): void {
         let html = "";
         for(let i = 0; i <= 8; ++i) {
-            html += '<tr><td>'
+            html += '<tr><td id="label-d' + i + '">'
                 + 'D' + i
                 + '</td><td>'
                 + '<div class="form-check form-switch">'
@@ -139,8 +154,57 @@ export class FrontendApplication {
         }
     }
 
-    public openModal(name: string) {
+    private openOrCloseModal(name: string) {
         const el = document.getElementById(name + "-dialog");
         if(el instanceof HTMLElement) Modal.getOrCreateInstance(el).toggle();
+    }
+   
+    public openInfo() { this.openOrCloseModal("info"); }
+
+    public openSettings() {
+        new APIRequest(this, "/config")
+            .onReceive((resp) => {
+                this.openOrCloseModal("settings");
+                this.settings = resp.split("\n");
+                for(let i = 0; i < 12; ++i) if(this.settings[i] === undefined) this.settings[i] = "";
+                this.layout.setFormValue("settings-network-name", this.settings[0]);
+                this.layout.setFormValue("settings-network-ssid", this.settings[1]);
+                this.layout.setFormValue("settings-network-password", this.settings[2]);
+                this.layout.setFormValue("settings-pins-d0", this.settings[3]);
+                this.layout.setFormValue("settings-pins-d1", this.settings[4]);
+                this.layout.setFormValue("settings-pins-d2", this.settings[5]);
+                this.layout.setFormValue("settings-pins-d3", this.settings[6]);
+                this.layout.setFormValue("settings-pins-d4", this.settings[7]);
+                this.layout.setFormValue("settings-pins-d5", this.settings[8]);
+                this.layout.setFormValue("settings-pins-d6", this.settings[9]);
+                this.layout.setFormValue("settings-pins-d7", this.settings[10]);
+                this.layout.setFormValue("settings-pins-d8", this.settings[11]);
+                this.layout.show("settings", true);
+            });
+    }
+
+    private buildQuery(index: number, param: string, field: string): string {
+        if(this.settings[index] != this.layout.getFormValue(field)) return param + "=" + encodeURIComponent(this.layout.getFormValue(field)) + "&";
+        else return "";
+    }
+    public saveSettings() {
+        const query = this.buildQuery(0, "name", "settings-network-name")
+            + this.buildQuery(1, "ssid", "settings-network-ssid")
+            + this.buildQuery(2, "password", "settings-network-password")
+            + this.buildQuery(3, "pinName0", "settings-pins-d0")
+            + this.buildQuery(4, "pinName1", "settings-pins-d1")
+            + this.buildQuery(5, "pinName2", "settings-pins-d2")
+            + this.buildQuery(6, "pinName3", "settings-pins-d3")
+            + this.buildQuery(7, "pinName4", "settings-pins-d4")
+            + this.buildQuery(8, "pinName5", "settings-pins-d5")
+            + this.buildQuery(9, "pinName6", "settings-pins-d6")
+            + this.buildQuery(10, "pinName7", "settings-pins-d7")
+            + this.buildQuery(11, "pinName8", "settings-pins-d8")
+        ;
+        new APIRequest(this, "/config?" + query)
+            .onFinish(() => {
+                this.openOrCloseModal("settings");
+                this.readSettings();
+            });
     }
 }

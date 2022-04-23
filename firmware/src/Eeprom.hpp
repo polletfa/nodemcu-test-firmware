@@ -2,7 +2,7 @@
  *
  * NodeMCU Test Firmware
  *
- * (c) 2021-2022 Fabien Pollet <polletfa@posteo.de>
+ * (c) 2022 Fabien Pollet <polletfa@posteo.de>
  * MIT License (see LICENSE.md file)
  *
  *****************************************************/
@@ -22,7 +22,7 @@ struct EepromData {
 
 class Eeprom {
 public:
-    static constexpr char* DEFAULT_NAME {"test-uctrl"};
+    static constexpr char* DEFAULT_NAME {"nodemcu-test-firmware"};
     
     Eeprom();
     

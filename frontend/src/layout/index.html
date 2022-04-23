@@ -1,4 +1,12 @@
-<!DOCTYPE html>
+<!-- -------------------------------------------------
+
+   NodeMCU Test Firmware - Web interface
+
+   (c) 2022 Fabien Pollet <polletfa@posteo.de>
+   MIT License (see LICENSE.md file)
+  
+  ----------------------------------------------------
+--><!DOCTYPE html>
 <!--                                    -->
 <!-- Import external files              -->
 <!--                                    -->
@@ -10,7 +18,7 @@
 
   NodeMCU Test Firmware - Web interface
 
-  (c) 2021-2022 Fabien Pollet <polletfa@posteo.de>
+  (c) 2022 Fabien Pollet <polletfa@posteo.de>
 
   Permission is hereby granted, free of charge, to any person 
   obtaining a copy of this software and associated documentation
@@ -38,7 +46,7 @@
     <link id="favicon" rel="icon" type="image/svg+xml" href="/favicon.svg">
     <title><!name> <!version></title>
   </head>
-  <body onresize="window.application.layout.resizeHeader();" class="bootstrap-dark">
+  <body onresize="window.application.layout.resizeHeader();">
     
     <!-- Header: title bar & error banner -->
 
@@ -57,14 +65,16 @@
           <!include layout/content.html>
         </div>
       </div>
+
+        <!-- Modals -->
+      <!include layout/info-dialog.html>
+      <!include layout/settings-dialog.html>
+      
     </main>
 
     <!-- Footer -->
 
     <!include layout/footer.html>
 
-    <!-- Modals -->
-    <!include layout/info-dialog.html>
-    <!include layout/settings-dialog.html>
   </body>
 </html>
