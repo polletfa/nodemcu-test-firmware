@@ -5,8 +5,13 @@ NodeMCU Test Firmware is a simple firmware designed to quickly test a component 
 It provides a web interface served over WiFi to read and write digital pins D0 to D8 on the
 NodeMCU ESP 8266.
 
-The firmware is written in C++ with the Arduino library.
+The firmware is written in C++ with the Arduino library and ESP8266 package.
 The frontend is written in TypeScript and HTML with the Bootstrap framework for the layout.
+
+![main-window](./screenshots/main-window.png)
+![settings-network](./screenshots/settings-network.png)
+![settings-pins](./screenshots/settings-pins.png)
+![info-dialog](./screenshots/info-dialog.png)
 
 # Build
 
